@@ -518,7 +518,16 @@ Important functions:
 
 ### Payments
 
-Payments are demo/local records, not real payment gateway transactions.
+Payments support Cashfree API/Web Checkout when credentials are configured. Without credentials, the app keeps a local demo fallback so the assignment can still be tested on XAMPP.
+
+Cashfree configuration can be provided through environment variables:
+
+```text
+CASHFREE_MODE=sandbox
+CASHFREE_APP_ID=your_cashfree_app_id
+CASHFREE_SECRET_KEY=your_cashfree_secret_key
+CASHFREE_CURRENCY=INR
+```
 
 Payment records include:
 
@@ -527,10 +536,19 @@ Payment records include:
 - Currency
 - Provider
 - Method
-- Cashfree-style order ID
+- Cashfree order ID
 - Transaction ID
 - Payment status
 - Paid timestamp
+
+### Ticket API
+
+Ticket search supports the Ticketmaster Discovery API when an API key is configured. If no key is available, TripNovaa shows demo fallback ticket results.
+
+```text
+TICKETMASTER_API_KEY=your_ticketmaster_api_key
+TICKETMASTER_COUNTRY_CODE=US
+```
 
 ### Offers
 
@@ -740,7 +758,7 @@ Main tables in `tripnovaa.sql`:
 - OTP is demo-only and always uses `123456`.
 - Admin login uses a seeded database account.
 - User/captain messaging works through MySQL, not real-time sockets.
-- Payments are demo records and do not charge real money.
+- Payments use Cashfree Web Checkout when real sandbox/production credentials are configured; otherwise they use local demo fallback records.
 - Some UI assets use external CDN/image URLs such as Leaflet and Unsplash. Core database features still run locally, but full visual/map rendering may depend on browser network availability unless assets are vendored locally.
 - The app includes compatibility helpers that alter older local tables when required, for example ride status and message table readiness.
 - Current UI is mobile-app styled with top/bottom navigation adjusted for user, captain, and admin roles.
